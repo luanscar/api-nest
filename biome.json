@@ -1,0 +1,30 @@
+{
+	"linter": {
+		"rules": {
+			"correctness": {
+				"noUnusedVariables": {
+					"level": "error",
+					"fix": "none"
+				}
+			},
+			"style": {
+				"useImportType": "off",
+				"useNumberNamespace": "off",
+				"useConst": {
+					"level": "warn",
+					"fix": "unsafe"
+				},
+				"useTemplate": {
+					"level": "warn",
+					"fix": "safe"
+				}
+			}
+		},
+		"ignore": ["**/node_modules/**", "**/dist/**"]
+	},
+	"javascript": {
+		"parser": {
+			"unsafeParameterDecoratorsEnabled": true
+		}
+	}
+}
