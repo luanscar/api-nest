@@ -3,7 +3,7 @@ import {
 	ExecutionContext,
 	HttpException,
 } from "@nestjs/common";
-import { ZodSchema } from "zod";
+import { z, ZodSchema } from "zod";
 
 interface ZodValidationOptions {
 	body?: ZodSchema;
@@ -20,10 +20,10 @@ export const ZodValidation = (schemas: ZodValidationOptions) => {
 			const bodyData = schemas.body.safeParse(body);
 
 			if (!bodyData.success) {
-				throw new HttpException(
-					`Body validation failed: ${JSON.stringify(bodyData.error.flatten().fieldErrors)}`,
-					400,
-				);
+				if (bodyData.error instanceof z.ZodError) {
+					const { fieldErrors } = bodyData.error.flatten();
+					throw new HttpException({ error: fieldErrors }, 400);
+				}
 			}
 			return { ...body };
 		}
@@ -32,12 +32,10 @@ export const ZodValidation = (schemas: ZodValidationOptions) => {
 			const queryData = schemas.query.safeParse(query);
 
 			if (!queryData.success) {
-				throw new HttpException(
-					`Query validation failed: ${JSON.stringify(
-						queryData.error.flatten().fieldErrors,
-					)}`,
-					400,
-				);
+				if (queryData.error instanceof z.ZodError) {
+					const { fieldErrors } = queryData.error.flatten();
+					throw new HttpException({ error: fieldErrors }, 400);
+				}
 			}
 			return { ...query };
 		}
@@ -45,10 +43,10 @@ export const ZodValidation = (schemas: ZodValidationOptions) => {
 			const paramsData = schemas.params.safeParse(params);
 
 			if (!paramsData.success) {
-				throw new HttpException(
-					`Params validation failed: ${JSON.stringify(paramsData.error.flatten().fieldErrors)}`,
-					400,
-				);
+				if (paramsData.error instanceof z.ZodError) {
+					const { fieldErrors } = paramsData.error.flatten();
+					throw new HttpException({ error: fieldErrors }, 400);
+				}
 			}
 			return { ...params };
 		}
