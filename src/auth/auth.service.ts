@@ -1,5 +1,5 @@
 import { Inject, Injectable, UnauthorizedException } from "@nestjs/common";
-import { SignUpInputDTO } from "./dto/sign-up.dto";
+import { SignInInputDTO, SignUpInputDTO } from "./dto/sign-up.dto";
 import { PrismaService } from "@main/infra/database/orm/prisma/prisma.service";
 
 import { IEncoder } from "@main/infra/services/encoder.service.interface";
@@ -35,7 +35,7 @@ export class AuthService {
 		return newUser;
 	}
 
-	// async signIn() {
-	// 	return `This action returns all auth`;
-	// }
+	async signIn({ email, password }: SignInInputDTO) {
+		return new Error("Not implemented");
+	}
 }

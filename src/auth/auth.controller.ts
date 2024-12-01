@@ -1,22 +1,12 @@
-import {
-	Controller,
-	Get,
-	Post,
-	Body,
-	Patch,
-	Param,
-	Delete,
-} from "@nestjs/common";
+import { Controller, Post, Body } from "@nestjs/common";
 import { AuthService } from "./auth.service";
-import { SignUpInputDTO, SignUpOutputDTO } from "./dto/sign-up.dto";
+import {
+	SignInInputDTO,
+	signInInputSchema,
+	SignUpInputDTO,
+	signUpInputSchema,
+} from "./dto/sign-up.dto";
 import { ZodValidation } from "@shared/decorators/zod-validation.decorator";
-import { z } from "zod";
-
-const bodySchema = z.object({
-	name: z.string(),
-	email: z.string().email(),
-	password: z.string().min(6),
-});
 
 @Controller("auth")
 export class AuthController {
@@ -25,11 +15,22 @@ export class AuthController {
 	@Post("sign-up")
 	signUp(
 		@ZodValidation({
-			body: bodySchema,
+			body: signUpInputSchema,
 		})
 		@Body()
 		signUpOutputDTO: SignUpInputDTO,
 	) {
 		return this.authService.signUp(signUpOutputDTO);
+	}
+
+	@Post("sign-in")
+	signIn(
+		@ZodValidation({
+			body: signInInputSchema,
+		})
+		@Body()
+		signUpOutputDTO: SignInInputDTO,
+	) {
+		return this.authService.signIn(signUpOutputDTO);
 	}
 }
