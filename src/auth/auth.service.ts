@@ -3,12 +3,14 @@ import { SignInInputDTO, SignUpInputDTO } from "./dto/sign-up.dto";
 import { PrismaService } from "@main/infra/database/orm/prisma/prisma.service";
 
 import { IEncoder } from "@main/infra/services/encoder.service.interface";
+import { IJwtService } from "@main/infra/services/jwt.service.interface";
 
 @Injectable()
 export class AuthService {
 	constructor(
 		private prisma: PrismaService,
 		@Inject("IEncoder") private readonly bcrypt: IEncoder,
+		@Inject("IJwtService") private readonly jwtService: IJwtService,
 	) {}
 
 	async signUp({ email, name, password }: SignUpInputDTO) {
@@ -36,6 +38,27 @@ export class AuthService {
 	}
 
 	async signIn({ email, password }: SignInInputDTO) {
-		return new Error("Not implemented");
+		const findUserByEmail = await this.prisma.user.findUnique({
+			where: {
+				email,
+			},
+		});
+
+		if (!findUserByEmail) {
+			throw new UnauthorizedException("User not found");
+		}
+
+		const passwordMatch = await this.bcrypt.compare(
+			password,
+			findUserByEmail.password,
+		);
+
+		if (!passwordMatch) {
+			throw new UnauthorizedException("Invalid password");
+		}
+
+		const token = await this.jwtService.generateToken(findUserByEmail);
+
+		return { token, user: findUserByEmail };
 	}
 }

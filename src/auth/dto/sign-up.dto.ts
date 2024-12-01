@@ -1,5 +1,3 @@
-import { IsPasswordConfirmed } from "auth/decorators/is-password-confirmed";
-import { IsEmail, IsString, IsStrongPassword, Matches } from "class-validator";
 import { User } from "users/entities/user.entity";
 import { z } from "zod";
 

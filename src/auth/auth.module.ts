@@ -5,6 +5,7 @@ import { JwtModule } from "@nestjs/jwt";
 import * as dotenv from "dotenv";
 import { BcryptEncoder } from "@main/infra/services/bcrypt-encoder.service";
 import { PrismaModule } from "@main/infra/database/orm/prisma/prisma.module";
+import { JwtService } from "@main/infra/services/jwt.service";
 
 dotenv.config();
 
@@ -23,6 +24,10 @@ dotenv.config();
 		{
 			provide: "IEncoder", // Usa um token para associar à interface
 			useClass: BcryptEncoder, // Classe concreta que será injetada
+		},
+		{
+			provide: "IJwtService", // Usa um token para associar à interface
+			useClass: JwtService, // Classe concreta que será injetada
 		},
 	],
 })
