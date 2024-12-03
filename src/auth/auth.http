@@ -7,8 +7,8 @@ POST http://{{host}}:{{port}}/{{apiversion}}/auth/sign-up
 Content-Type: application/json
 
 {
-  "name": "laaa",
-  "email": "john@acmeinc.com.br",
+  "name": 1,
+  "email": "john@acmeindc.com.br",
   "password": "W/54-mNLqUlUA0MnHn5cx4JfPux/8XK"
 }
 

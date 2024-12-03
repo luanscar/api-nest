@@ -1,4 +1,11 @@
-import { Controller, Post, Body } from "@nestjs/common";
+import {
+	Controller,
+	Post,
+	Body,
+	UseGuards,
+	UseInterceptors,
+	UsePipes,
+} from "@nestjs/common";
 import { AuthService } from "./auth.service";
 import {
 	SignInInputDTO,
@@ -6,17 +13,16 @@ import {
 	SignUpInputDTO,
 	signUpInputSchema,
 } from "./dto/sign-up.dto";
-import { ZodValidation } from "@shared/decorators/zod-validation.decorator";
+import { Schema, ZodValidation } from "./decorators/zod-validation.decorator";
+import { LocalAuthGuard } from "./guards/local-auth.guard";
 
 @Controller("auth")
 export class AuthController {
 	constructor(private readonly authService: AuthService) {}
 
 	@Post("sign-up")
+	@Schema(signUpInputSchema)
 	signUp(
-		@ZodValidation({
-			body: signUpInputSchema,
-		})
 		@Body()
 		signUpOutputDTO: SignUpInputDTO,
 	) {
@@ -24,10 +30,9 @@ export class AuthController {
 	}
 
 	@Post("sign-in")
+	@Schema(signInInputSchema)
+	@UseGuards(LocalAuthGuard)
 	signIn(
-		@ZodValidation({
-			body: signInInputSchema,
-		})
 		@Body()
 		signUpOutputDTO: SignInInputDTO,
 	) {

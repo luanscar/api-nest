@@ -61,4 +61,30 @@ export class AuthService {
 
 		return { token, user: findUserByEmail };
 	}
+
+	async validateUser(email: string, password: string) {
+		const user = await this.prisma.user.findUnique({
+			where: {
+				email,
+			},
+		});
+
+		if (user) {
+			const isPasswordValid = await this.bcrypt.compare(
+				password,
+				user.password,
+			);
+
+			if (isPasswordValid) {
+				return {
+					...user,
+					password: undefined,
+				};
+			}
+		}
+
+		throw new UnauthorizedException(
+			"Email address or password provided is incorrect.",
+		);
+	}
 }

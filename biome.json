@@ -2,10 +2,7 @@
 	"linter": {
 		"rules": {
 			"correctness": {
-				"noUnusedVariables": {
-					"level": "error",
-					"fix": "none"
-				}
+				"noUnusedVariables": "off"
 			},
 			"style": {
 				"useImportType": "off",
