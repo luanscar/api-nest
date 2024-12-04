@@ -26,10 +26,26 @@ model User {
   createAt DateTime @default(now()) @map("created_at")
   updateAt DateTime @updatedAt @map("updated_at")
 
+ tokens             Token[]
   member_on          Member[]
   owns_organizations Organization[]
 
   @@map("users")
+}
+
+enum TokenType {
+  PASSWORD_RECOVER
+}
+
+model Token {
+  id        String    @id @unique @default(uuid()) @db.Uuid
+  type      TokenType
+  createdAt DateTime  @default(now()) @map("created_at")
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String @map("user_id")  @db.Uuid
+
+  @@map("tokens")
 }
 
 model Member {

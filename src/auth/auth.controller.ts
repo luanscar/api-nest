@@ -2,10 +2,13 @@ import {
 	Body,
 	Controller,
 	Get,
+	HttpCode,
+	HttpStatus,
 	Post,
 	Request,
 	UseGuards,
 } from "@nestjs/common";
+import { z } from "zod";
 import { AuthService } from "./auth.service";
 import { CurrentUser } from "./decorators/current-user.decorator";
 import { IsPublic } from "./decorators/is-public.decorator";
@@ -32,6 +35,7 @@ export class AuthController {
 	@Post("sign-in")
 	@Schema(signInInputSchema)
 	@UseGuards(LocalAuthGuard)
+	@HttpCode(HttpStatus.OK)
 	signIn(
 		@Request()
 		req: SignInOutputDTO,
@@ -40,7 +44,19 @@ export class AuthController {
 	}
 
 	@Get("me")
+	@HttpCode(HttpStatus.OK)
 	profile(@CurrentUser() user: SignInOutputDTO) {
 		return user;
+	}
+
+	@IsPublic()
+	@Schema(
+		z.object({
+			email: z.string().email(),
+		}),
+	)
+	@Post("password-recovery")
+	resetPassword(@Body() body: { email: string }) {
+		return this.authService.resetPassword(body.email);
 	}
 }

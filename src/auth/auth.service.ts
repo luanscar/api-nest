@@ -1,6 +1,11 @@
 import { PrismaService } from "@main/infra/database/orm/prisma/prisma.service";
 import { IEncoder } from "@main/infra/services/encoder.service.interface";
-import { Inject, Injectable, UnauthorizedException } from "@nestjs/common";
+import {
+	HttpStatus,
+	Inject,
+	Injectable,
+	UnauthorizedException,
+} from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
 import { SignInInputPayloadDTO, SignInOutputDTO } from "./dto/sign-in.dto";
 import { SignUpInputDTO } from "./dto/sign-up.dto";
@@ -71,5 +76,27 @@ export class AuthService {
 		throw new UnauthorizedException(
 			"Email address or password provided is incorrect.",
 		);
+	}
+
+	async resetPassword(email: string) {
+		const userFromEmail = await this.prisma.user.findUnique({
+			where: { email },
+		});
+
+		if (!userFromEmail) {
+			// We don't want to people to know if the user really exists
+			return HttpStatus.OK;
+		}
+
+		const { id: code } = await this.prisma.token.create({
+			data: {
+				type: "PASSWORD_RECOVER",
+				userId: userFromEmail.id,
+			},
+		});
+
+		// Send e-mail with password recover link
+
+		console.log("Password recover token:", code);
 	}
 }
