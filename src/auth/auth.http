@@ -7,7 +7,7 @@ POST http://{{host}}:{{port}}/{{apiversion}}/auth/sign-up
 Content-Type: application/json
 
 {
-  "name": 1,
+  "name": "luan",
   "email": "john@acmeindc.com.br",
   "password": "W/54-mNLqUlUA0MnHn5cx4JfPux/8XK"
 }
@@ -23,10 +23,8 @@ Content-Type: application/json
 }
 
 ###
-POST http://{{host}}:{{port}}/{{apiversion}}/auth/profile
+GET http://{{host}}:{{port}}/{{apiversion}}/auth/me
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQ0YWFiMzQzLWQyZTUtNDY2Zi04NDU1LWNkZGNlZDBkNDRjYSIsIm5hbWUiOiJKb2huIERvZSIsImVtYWlsIjoiam9obkBjb250b3NvLmNvbS5iciIsImlhdCI6MTczMjA0NzQ0OCwiZXhwIjoxNzYzNTgzNDQ4fQ.Ia4kc5AwNHYnD1xPOqsPRu_h-f6FOZOwCGflKYNO6JU
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI5ZGU3ODBiMC04ZTdmLTRlYTUtOTFiZi1lYmM2OGUxNjc4M2QiLCJlbWFpbCI6ImpvaG5AYWNtZWluYy5jb20uYnIiLCJuYW1lIjoiSm9obnMiLCJpYXQiOjE3MzMyNzc3MjcsImV4cCI6MTczMzM2NDEyN30.uO0hjlZAh8EWDx4ULzhRbyd0s8jj-s8ACCMpzbH3QMM
 
-{
-  "uuid": "5734df6b-d631-4f9b-b975-bd006f1e1f72"
-}
+  
