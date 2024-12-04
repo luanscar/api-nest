@@ -1,11 +1,12 @@
-import { MiddlewareConsumer, Module, RequestMethod } from "@nestjs/common";
-import { AuthService } from "./auth.service";
-import { AuthController } from "./auth.controller";
+import { PrismaModule } from "@main/infra/database/orm/prisma/prisma.module";
+import { BcryptEncoder } from "@main/infra/services/bcrypt-encoder.service";
+import { Module } from "@nestjs/common";
 import { JwtModule } from "@nestjs/jwt";
 import * as dotenv from "dotenv";
-import { BcryptEncoder } from "@main/infra/services/bcrypt-encoder.service";
-import { PrismaModule } from "@main/infra/database/orm/prisma/prisma.module";
-import { JwtService } from "@main/infra/services/jwt.service";
+import { AuthController } from "./auth.controller";
+import { AuthService } from "./auth.service";
+
+import { JwtStrategy } from "./strategies/jwt.strategy";
 import { LocalStrategy } from "./strategies/local.strategy";
 
 dotenv.config();
@@ -15,7 +16,7 @@ dotenv.config();
 		PrismaModule,
 		JwtModule.register({
 			global: true,
-			secret: process.env.JWT_SECRET,
+			secret: "process.env.JWT_SECRET",
 			signOptions: { expiresIn: "1d" },
 		}),
 	],
@@ -23,13 +24,10 @@ dotenv.config();
 	providers: [
 		AuthService,
 		LocalStrategy,
+		JwtStrategy,
 		{
 			provide: "IEncoder", // Usa um token para associar à interface
 			useClass: BcryptEncoder, // Classe concreta que será injetada
-		},
-		{
-			provide: "IJwtService", // Usa um token para associar à interface
-			useClass: JwtService, // Classe concreta que será injetada
 		},
 	],
 })
