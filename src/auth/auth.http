@@ -30,6 +30,15 @@ Content-Type: application/json
 }
 
 ###
+POST http://{{host}}:{{port}}/{{apiversion}}/auth/password-reset
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI5ZGU3ODBiMC04ZTdmLTRlYTUtOTFiZi1lYmM2OGUxNjc4M2QiLCJlbWFpbCI6ImpvaG5AYWNtZWluYy5jb20uYnIiLCJuYW1lIjoiSm9obnMiLCJpYXQiOjE3MzMyNzc3MjcsImV4cCI6MTczMzM2NDEyN30.uO0hjlZAh8EWDx4ULzhRbyd0s8jj-s8ACCMpzbH3QMM
+
+{
+  "email": "john@acmindc.com.br"
+}
+
+###
 GET http://{{host}}:{{port}}/{{apiversion}}/auth/me
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI5ZGU3ODBiMC04ZTdmLTRlYTUtOTFiZi1lYmM2OGUxNjc4M2QiLCJlbWFpbCI6ImpvaG5AYWNtZWluYy5jb20uYnIiLCJuYW1lIjoiSm9obnMiLCJpYXQiOjE3MzMyNzc3MjcsImV4cCI6MTczMzM2NDEyN30.uO0hjlZAh8EWDx4ULzhRbyd0s8jj-s8ACCMpzbH3QMM

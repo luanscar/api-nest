@@ -1,6 +1,7 @@
 import { PrismaService } from "@main/infra/database/orm/prisma/prisma.service";
 import { IEncoder } from "@main/infra/services/encoder.service.interface";
 import {
+	HttpCode,
 	HttpStatus,
 	Inject,
 	Injectable,
@@ -78,7 +79,7 @@ export class AuthService {
 		);
 	}
 
-	async resetPassword(email: string) {
+	async recoverPassword(email: string) {
 		const userFromEmail = await this.prisma.user.findUnique({
 			where: { email },
 		});
@@ -98,5 +99,29 @@ export class AuthService {
 		// Send e-mail with password recover link
 
 		console.log("Password recover token:", code);
+	}
+
+	async resetPassword(code: string, newPassword: string) {
+		const tokenFromCode = await this.prisma.token.findUnique({
+			where: { id: code },
+		});
+
+		if (!tokenFromCode) {
+			throw new UnauthorizedException();
+		}
+
+		const hashedPassword = await this.bcrypt.encode(newPassword);
+
+		await this.prisma.$transaction([
+			this.prisma.user.update({
+				where: { id: tokenFromCode.userId },
+				data: { password: hashedPassword },
+			}),
+			this.prisma.token.delete({
+				where: { id: code },
+			}),
+		]);
+
+		return HttpCode(HttpStatus.NO_CONTENT);
 	}
 }

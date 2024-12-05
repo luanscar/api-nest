@@ -56,7 +56,20 @@ export class AuthController {
 		}),
 	)
 	@Post("password-recovery")
-	resetPassword(@Body() body: { email: string }) {
-		return this.authService.resetPassword(body.email);
+	recoverPassword(@Body() body: { email: string }) {
+		return this.authService.recoverPassword(body.email);
+	}
+
+	@Schema(
+		z.object({
+			code: z.string(),
+			password: z.string().min(6),
+		}),
+	)
+
+	@IsPublic()
+	@Post("password-reset")
+	resetPassword(@Body() body: { code: string; password: string }) {
+		return this.authService.resetPassword(body.code, body.password);
 	}
 }
