@@ -21,7 +21,7 @@
 		"test:e2e": "jest --config ./apps/api/test/jest-e2e.json"
 	},
 	"prisma": {
-		"schema": "./src/main/infra/database/orm/prisma/schema.prisma"
+		"schema": "./apps/api/src/main/infra/database/orm/prisma/schema.prisma"
 	},
 	"dependencies": {
 		"@casl/ability": "^6.7.2",
