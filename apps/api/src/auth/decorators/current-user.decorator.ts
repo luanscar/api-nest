@@ -1,6 +1,6 @@
 import { ExecutionContext, createParamDecorator } from "@nestjs/common";
-import { SignInOutputDTO } from "auth/dto/sign-in.dto";
-import { User } from "users/entities/user.entity";
+import { User } from "../../users/entities/user.entity";
+import { SignInOutputDTO } from "../dto/sign-in.dto";
 
 export const CurrentUser = createParamDecorator(
 	(data: unknown, context: ExecutionContext): User => {

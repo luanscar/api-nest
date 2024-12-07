@@ -1,5 +1,5 @@
-import { User } from "users/entities/user.entity";
 import { z } from "zod";
+import { User } from "../../users/entities/user.entity";
 
 export interface SignInOutputDTO extends Request {
 	token: string;

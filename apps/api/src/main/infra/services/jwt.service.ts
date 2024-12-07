@@ -1,5 +1,5 @@
+import { User } from "apps/api/src/users/entities/user.entity";
 import jwt from "jsonwebtoken";
-import { User } from "users/entities/user.entity";
 import { IJwtService } from "./jwt.service.interface";
 
 export class JwtService implements IJwtService {

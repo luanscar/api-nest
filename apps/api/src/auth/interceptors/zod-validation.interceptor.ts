@@ -6,8 +6,8 @@ import {
 	NestInterceptor,
 } from "@nestjs/common";
 import { Reflector } from "@nestjs/core";
-import { ZodValidationOptions } from "auth/decorators/zod-validation.decorator";
 import { z } from "zod";
+import { ZodValidationOptions } from "../decorators/zod-validation.decorator";
 
 @Injectable()
 export class ZodValidationInterceptor implements NestInterceptor {

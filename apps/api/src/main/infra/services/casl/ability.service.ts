@@ -1,8 +1,8 @@
 import {
 	AbilityBuilder,
 	CreateAbility,
-	createMongoAbility,
 	MongoAbility,
+	createMongoAbility,
 } from "@casl/ability";
 import { z } from "zod";
 

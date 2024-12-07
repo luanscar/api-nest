@@ -1,6 +1,6 @@
 import { SetMetadata, UseInterceptors, applyDecorators } from "@nestjs/common";
-import { ZodValidationInterceptor } from "auth/interceptors/zod-validation.interceptor";
 import { ZodSchema, z } from "zod";
+import { ZodValidationInterceptor } from "../interceptors/zod-validation.interceptor";
 
 export interface ZodValidationOptions {
 	body?: ZodSchema;
