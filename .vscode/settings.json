@@ -1,7 +1,7 @@
 
 {
     "editor.codeActionsOnSave": {
-        "source.removeUnusedImports": true,
-        "source.organizeImports": true
+        "source.removeUnusedImports": "explicit",
+        "source.organizeImports": "explicit"
     }
 }
