@@ -8,6 +8,7 @@ import {
 	UnauthorizedException,
 } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
+import { MailerService } from "../mailer/mailer.service";
 import { SignInInputPayloadDTO, SignInOutputDTO } from "./dto/sign-in.dto";
 import { SignUpInputDTO } from "./dto/sign-up.dto";
 
@@ -17,6 +18,7 @@ export class AuthService {
 		private prisma: PrismaService,
 		private readonly jwtService: JwtService,
 		@Inject("IEncoder") private readonly bcrypt: IEncoder,
+		private readonly mailerService: MailerService,
 	) {}
 
 	async signUp({ email, name, password }: SignUpInputDTO) {
@@ -97,7 +99,11 @@ export class AuthService {
 		});
 
 		// Send e-mail with password recover link
-
+		console.log("Sending e-mail to", userFromEmail.email);
+		this.mailerService.mailer.emit("CREATE_SEND_EMAIL", {
+			name: userFromEmail.name,
+			email: userFromEmail.email,
+		});
 		console.log("Password recover token:", code);
 	}
 

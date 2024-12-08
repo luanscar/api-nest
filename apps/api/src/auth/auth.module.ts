@@ -6,6 +6,7 @@ import * as dotenv from "dotenv";
 import { AuthController } from "./auth.controller";
 import { AuthService } from "./auth.service";
 
+import { MailerModule } from "../mailer/mailer.module";
 import { JwtStrategy } from "./strategies/jwt.strategy";
 import { LocalStrategy } from "./strategies/local.strategy";
 
@@ -19,6 +20,7 @@ dotenv.config();
 			secret: "process.env.JWT_SECRET",
 			signOptions: { expiresIn: "1d" },
 		}),
+		MailerModule,
 	],
 	controllers: [AuthController],
 	providers: [

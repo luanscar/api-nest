@@ -9,6 +9,7 @@ import { UsersModule } from "./users/users.module";
 import configuration from "@config/configuration";
 import { JwtAuthGuard } from "./auth/guards/jwt-auth.guard";
 import { ZodValidationGuard } from "./auth/guards/zod-validation.guard";
+import { MailerModule } from "./mailer/mailer.module";
 
 @Module({
 	imports: [
@@ -19,10 +20,12 @@ import { ZodValidationGuard } from "./auth/guards/zod-validation.guard";
 					: ".env.development",
 			isGlobal: true,
 			load: [configuration],
+			expandVariables: true,
 		}),
 		PrismaModule,
 		AuthModule,
 		UsersModule,
+		MailerModule,
 	],
 	controllers: [],
 	providers: [

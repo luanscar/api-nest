@@ -1,19 +1,24 @@
 import { BullModule } from "@nestjs/bull";
 import { Module } from "@nestjs/common";
+import { ConfigModule, ConfigService } from "@nestjs/config";
 
 import { NodemailerModule } from "./nodemailer/nodemailer.module";
 import { SendEmailModule } from "./send-email/send-email.module";
 
-import * as dotenv from "dotenv";
-
-dotenv.config();
 @Module({
 	imports: [
-		BullModule.forRoot({
-			redis: {
-				host: process.env.REDIS_HOST || "localhost",
-				port: parseInt(process.env.REDIS_PORT as string) || 6379,
-			},
+		ConfigModule.forRoot({
+			isGlobal: true,
+		}),
+		BullModule.forRootAsync({
+			imports: [ConfigModule],
+			useFactory: (configService: ConfigService) => ({
+				redis: {
+					host: configService.get<string>("REDIS_HOST", "localhost"),
+					port: configService.get<number>("REDIS_PORT", 6379),
+				},
+			}),
+			inject: [ConfigService],
 		}),
 		SendEmailModule,
 		NodemailerModule,
