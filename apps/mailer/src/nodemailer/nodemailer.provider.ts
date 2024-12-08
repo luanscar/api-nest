@@ -3,8 +3,6 @@ import * as nodemailer from "nodemailer";
 import { ConfigService } from "@nestjs/config";
 import * as dotenv from "dotenv";
 
-dotenv.config();
-
 export const NodemailerProvider = {
 	provide: "NODEMAILER_PROVIDER",
 	useFactory: (configService: ConfigService) => {

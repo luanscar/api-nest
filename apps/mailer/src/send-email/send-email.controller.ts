@@ -8,7 +8,7 @@ import { SendEmailService } from "./send-email.service";
 export class SendEmailController {
 	constructor(private readonly sendEmailService: SendEmailService) {}
 
-	@MessagePattern("CREATE_SEND_EMAIL")
+	@MessagePattern("PASSWORD_RECOVER")
 	async sendEmail(@Payload() createSendEmailDto: CreateSendEmailDto) {
 		console.log("Received message", createSendEmailDto);
 		await this.sendEmailService.sendEmail(createSendEmailDto);

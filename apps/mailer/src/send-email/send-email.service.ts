@@ -7,8 +7,8 @@ export class SendEmailService {
 	constructor(private readonly sendEmailQueueService: SendEmailQueueService) {}
 
 	async sendEmail(createSendEmailDto: CreateSendEmailDto) {
-		const { name, email } = createSendEmailDto;
+		const { name, email, code } = createSendEmailDto;
 		console.log("Sending email to", name, email);
-		await this.sendEmailQueueService.add({ name, email });
+		await this.sendEmailQueueService.add({ name, email, code });
 	}
 }

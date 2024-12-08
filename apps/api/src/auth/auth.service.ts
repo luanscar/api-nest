@@ -100,11 +100,11 @@ export class AuthService {
 
 		// Send e-mail with password recover link
 		console.log("Sending e-mail to", userFromEmail.email);
-		this.mailerService.mailer.emit("CREATE_SEND_EMAIL", {
+		this.mailerService.mailer.emit("PASSWORD_RECOVER", {
 			name: userFromEmail.name,
 			email: userFromEmail.email,
+			code,
 		});
-		console.log("Password recover token:", code);
 	}
 
 	async resetPassword(code: string, newPassword: string) {

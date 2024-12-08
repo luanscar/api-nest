@@ -1,5 +1,5 @@
 export class CreateSendEmailDto {
-  name: string;
-
-  email: string;
+	name: string;
+	code: string;
+	email: string;
 }
