@@ -10,6 +10,7 @@ Content-Type: application/json
   "name": "luan",
   "email": "luaanscar@gmail.com",
   "password": "W/54-mNLqUlUA0MnHn5cx4JfPux/8XK"
+  
 }
 
 ###
@@ -26,7 +27,7 @@ POST http://{{host}}:{{port}}/{{apiversion}}/auth/password-recovery
 Content-Type: application/json
 
 {
-  "email": "luaanscar@gmail.com"
+  "email": "john@acmindc.com.br"
 }
 
 ###
@@ -41,6 +42,6 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI5ZGU3ODBiM
 ###
 GET http://{{host}}:{{port}}/{{apiversion}}/auth/me
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxODk2YTIxMC1mMTlkLTQ3OWQtYTE4ZC03M2UwNDkyYjdhMGMiLCJlbWFpbCI6ImpvaG5AYWNtZWluZGMuY29tLmJyIiwibmFtZSI6Imx1YW4iLCJpYXQiOjE3MzM1MTQxMjEsImV4cCI6MTczMzYwMDUyMX0.wvQVDhzUfKeQfsdhL1fOoPDb-npc9lJj1Y139pdL_po
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI5ZGU3ODBiMC04ZTdmLTRlYTUtOTFiZi1lYmM2OGUxNjc4M2QiLCJlbWFpbCI6ImpvaG5AYWNtZWluYy5jb20uYnIiLCJuYW1lIjoiSm9obnMiLCJpYXQiOjE3MzMyNzc3MjcsImV4cCI6MTczMzM2NDEyN30.uO0hjlZAh8EWDx4ULzhRbyd0s8jj-s8ACCMpzbH3QMM
 
   

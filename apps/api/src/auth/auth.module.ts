@@ -1,36 +1,29 @@
-import { PrismaModule } from "@main/infra/database/orm/prisma/prisma.module";
-import { BcryptEncoder } from "@main/infra/services/bcrypt-encoder.service";
 import { Module } from "@nestjs/common";
+import { ConfigService } from "@nestjs/config";
 import { JwtModule } from "@nestjs/jwt";
-import * as dotenv from "dotenv";
-import { AuthController } from "./auth.controller";
-import { AuthService } from "./auth.service";
+import { PassportModule } from "@nestjs/passport";
 
-import { MailerModule } from "../mailer/mailer.module";
-import { JwtStrategy } from "./strategies/jwt.strategy";
-import { LocalStrategy } from "./strategies/local.strategy";
-
-dotenv.config();
+import { Env } from "@/env";
+import { JwtStrategy } from "./jwt.strategy";
 
 @Module({
 	imports: [
-		PrismaModule,
-		JwtModule.register({
+		PassportModule,
+		JwtModule.registerAsync({
+			inject: [ConfigService],
 			global: true,
-			secret: "process.env.JWT_SECRET",
-			signOptions: { expiresIn: "1d" },
+			useFactory(config: ConfigService<Env, true>) {
+				const privateKey = config.get("JWT_PRIVATE_KEY", { infer: true });
+				const publicKey = config.get("JWT_PUBLIC_KEY", { infer: true });
+
+				return {
+					signOptions: { algorithm: "RS256", expiresIn: "365d" },
+					privateKey: Buffer.from(privateKey, "base64"),
+					publicKey: Buffer.from(publicKey, "base64"),
+				};
+			},
 		}),
-		MailerModule,
 	],
-	controllers: [AuthController],
-	providers: [
-		AuthService,
-		LocalStrategy,
-		JwtStrategy,
-		{
-			provide: "IEncoder", // Usa um token para associar à interface
-			useClass: BcryptEncoder, // Classe concreta que será injetada
-		},
-	],
+	providers: [JwtStrategy],
 })
 export class AuthModule {}
