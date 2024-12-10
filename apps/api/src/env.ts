@@ -5,7 +5,7 @@ export const envSchema = z.object({
   API_NAME: z.string(),
   APP_NAME: z.string(),
   CLIENT_URL: z.string().url(),
-  PORT: z.coerce.number().optional().default(3333),
+  API_PORT: z.coerce.number().optional().default(3333),
   DATABASE_HOST: z.string(),
   DATABASE_PORT: z.coerce.number(),
   DATABASE_URL: z.string().url(),

@@ -21,7 +21,10 @@ async function bootstrap() {
 	app.use(compression());
 	const configService = app.get(ConfigService);
 
-	const port = configService.get<number | undefined>("PORT");
-	app.listen(port as number);
+	const port = configService.get<number | undefined>("API_PORT");
+	app.listen(port as number, () => {
+		console.log(`Server running on port ${port}`);
+	});
+	
 }
 bootstrap();
