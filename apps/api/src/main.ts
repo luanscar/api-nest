@@ -1,15 +1,16 @@
-import { NestFactory, Reflector } from "@nestjs/core";
+import { ValidationPipe } from "@nestjs/common";
+import { ConfigService } from "@nestjs/config";
+import { NestFactory } from "@nestjs/core";
+import compression from "compression";
 import * as dotenv from "dotenv";
 import { AppModule } from "./app.module"; // Corrected import path
-import { ConfigService } from "@nestjs/config";
-import compression from "compression";
-import { ValidationPipe } from "@nestjs/common";
 
 dotenv.config();
 
 async function bootstrap() {
 	const app = await NestFactory.create(AppModule);
 	app.setGlobalPrefix("api/v1");
+	
 	app.useGlobalPipes(
 		new ValidationPipe({
 			transform: true, // Transforma os dados de entrada para o tipo esperado
